@@ -2,12 +2,14 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.7.0"
-    id("com.glovoapp.semantic-versioning") version "1.1.8"
     `java-library`
     `maven-publish`
+    signing
+    id("io.github.gradle-nexus.publish-plugin") version "1.1.0"
 }
 
 group = "com.semanticmart.alphaid"
+version = "0.0.1"
 
 repositories {
     mavenCentral()
@@ -33,27 +35,54 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-tasks.register("printSemanticVersion") {
-    doLast {
-        println("The project current version is ${project.semanticVersion.version}")
+tasks {
+    "sourcesJar"(Jar::class) {
+        classifier = "sources"
+        from(java.sourceSets["main"].allSource)
+        dependsOn("classes")
     }
 }
 
 publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/aleris/alphaid")
-            credentials {
-                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+
+            pom {
+                name.set("alphaid")
+                description.set("Random pseudo-unique string id generator with a default web friendly alphabet.")
+                url.set("https://github.com/aleris/alphaid")
+                licenses {
+                    license {
+                        name.set("MIT")
+                        url.set("https://github.com/aleris/alphaid/blob/main/LICENSE.md")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("aleris")
+                    }
+                }
+                scm {
+                    connection.set("https://github.com/aleris/alphaid.git")
+                    url.set("https://github.com/aleris/alphaid")
+                }
             }
         }
     }
+}
 
-    publications {
-        register<MavenPublication>("gpr") {
-            from(components["java"])
+signing {
+    useGpgCmd()
+    sign(publishing.publications["mavenJava"])
+}
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            stagingProfileId.set("9bec3460265011")
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
         }
     }
 }

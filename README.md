@@ -44,7 +44,7 @@ Tested thoroughly. Look in the test to see sample usages.
 <dependency>
   <groupId>com.semanticmart.alphaid</groupId>
   <artifactId>alphaid</artifactId>
-  <version>0.0.0</version>
+  <version>0.0.1</version>
 </dependency>
 ```
 
@@ -54,12 +54,12 @@ Tested thoroughly. Look in the test to see sample usages.
 **Groovy DSL**
 
 ```groovy
-compile 'com.semanticmart.alphaid:alphaid:0.0.0'
+compile 'com.semanticmart.alphaid:alphaid:0.0.1'
 ```
 
 **Kotlin DSL**
 ```kotlin
-implementation("com.semanticmart.alphaid:alphaid:0.0.0")
+implementation("com.semanticmart.alphaid:alphaid:0.0.1")
 ```
 
 
@@ -74,17 +74,17 @@ The default method creates secure, url-friendly, unique ids. It uses an url-frie
 a secure random number generator, and generates a unique ID with 32 characters.
 
 ```kotlin
-val id = AlphaId.random()
+val id = AlphaId.randomId()
 // id is something like `DVUQIrcvdhuAZhEWYapF58j4_m-5pT6j`
 ```
 
 
-### Specify length - `randomNanoId(length)`
+### Specify length - `randomId(length)`
 
 An additional method allows to generate custom IDs by specifying a custom length.
 
 ```kotlin
-val id = AlphaId.random(4)
+val id = AlphaId.randomId(4)
 // id is something like `5Osn`
 ```
 
@@ -94,19 +94,32 @@ unique IDs.
 
 ### Customize alphabet and/or random generator
 
+Generate with a custom alphabet:
+
 ```kotlin
 val alphaId = AlphaId(alphabet = "xyz".toCharArray())
 val id1 = alphaId.next(10)
 // id1 is something like `xxzxzyyyzy`
 val id2 = alphaId.next(10)
 // id2 is something like `yyyxyzzzxz`
+```
 
+Generate with a faster, less secure random generator, with a fixed seed:
+```kotlin
 val alphaId = AlphaId(randomGenerator = Random(123))
 val id1 = alphaId.next(10)
 // id1 is `rLvTj2WWfa`
 val id2 = alphaId.next(10)
 // id2 is `kfl_MAUg3l`
 ```
+
+## Publish
+
+Execute the publish script to automatically increase the version and publish to sonatype:
+
+`ORG_GRADLE_PROJECT_sonatypeUsername=[user] ORG_GRADLE_PROJECT_sonatypePassword=[pass] sh scripts/publish.sh patch`
+
+The tags can be: `major`, `minor` or `patch` corresponding to semantic version `major.minor.patch`.   
 
 ## License
 

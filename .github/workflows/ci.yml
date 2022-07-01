@@ -33,18 +33,5 @@ jobs:
       - name: gradle test
         run: gradle test
 
-      - name: gradle incrementSemanticVersion
-        run: gradle incrementSemanticVersion
-
-      - name: replace version in README
-        run: sh replace_version_readme.sh
-
-      - name: commit changes for new version
-        run: |
-          if [[ `git status --porcelain` ]]; then
-            git config --global user.name 'aleris'
-            git config --global user.email 'adrian.tosca@gmail.com'
-            git add -A
-            git commit -m "Bump version"
-            git push
-          fi
+#      - name: bump and publish new version
+#        run: sh ./scripts/publish.sh

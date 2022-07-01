@@ -12,11 +12,11 @@ import kotlin.math.floor
  * **Sample Usage**
  *
  * ```kotlin
- * val id = AlphaId.random()
+ * val id = AlphaId.randomId()
  * // id is something like `DVUQIrcvdhuAZhEWYapF58j4_m-5pT6j`
  *
  *
- * val id = AlphaId.random(4)
+ * val id = AlphaId.randomId(4)
  * // id is something like `5Osn`
  *
  *

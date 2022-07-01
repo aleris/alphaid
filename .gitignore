@@ -2,4 +2,5 @@
 .gradle
 build
 .md-e
+.kts-e
 .bak
