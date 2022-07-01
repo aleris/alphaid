@@ -1,0 +1,50 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      actions: write
+      contents: write
+    steps:
+      - name: jdk11
+        uses: actions/setup-java@v2
+        with:
+          java-version: "11"
+          distribution: "adopt"
+
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: cache ~/.gradle/caches
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-caches-${{ hashFiles('**/*.gradle.kts') }}
+
+      - name: gradle clean build
+        run: gradle clean build
+
+      - name: gradle test
+        run: gradle test
+
+      - name: gradle incrementSemanticVersion
+        run: gradle incrementSemanticVersion
+
+      - name: replace version in README
+        run: sh replace_version_readme.sh
+
+      - name: commit changes for new version
+        run: |
+          if [[ `git status --porcelain` ]]; then
+            git config --global user.name 'aleris'
+            git config --global user.email 'adrian.tosca@gmail.com'
+            git add -A
+            git commit -m "Bump version"
+            git push
+          fi
