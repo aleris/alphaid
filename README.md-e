@@ -44,7 +44,7 @@ Tested thoroughly. Look in the test to see sample usages.
 <dependency>
   <groupId>com.semanticmart.alphaid</groupId>
   <artifactId>alphaid</artifactId>
-  <version>0.0.2</version>
+  <version>0.0.1</version>
 </dependency>
 ```
 
