@@ -24,7 +24,7 @@ if git status --porcelain; then
   git config --global user.name 'aleris'
   git config --global user.email 'adrian.tosca@gmail.com'
   git add -A
-  git commit -m "Bump version to ${VERSION}"
+  git commit -m "Bump version from ${OLD_VERSION} to ${VERSION}"
   git push
 fi
 
