@@ -1,10 +1,8 @@
-package dev.atosca.alphaid
+package com.semanticmart.alphaid
 
 import org.apache.commons.math3.util.FastMath
 import java.security.SecureRandom
 import java.util.Random
-import kotlin.math.ceil
-import kotlin.math.floor
 
 /**
  * Random pseudo-unique string id generator with a default web friendly alphabet.
@@ -60,8 +58,8 @@ class AlphaId(
             throw IllegalArgumentException("length must be at least 1 and at most ${Short.MAX_VALUE}")
         }
         // https://github.com/aventrix/jnanoid/blob/develop/src/main/java/com/aventrix/jnanoid/jnanoid/NanoIdUtils.java#L109
-        val mask = (2 shl floor(FastMath.log(alphabet.size.toDouble() - 1) / LOG_OF_2).toInt()) - 1
-        val step = ceil(1.6 * mask * length / alphabet.size).toInt()
+        val mask = (2 shl FastMath.floor(FastMath.log(alphabet.size.toDouble() - 1) / LOG_OF_2).toInt()) - 1
+        val step = FastMath.ceil(1.6 * mask * length / alphabet.size).toInt()
         val idBuilder = StringBuilder(length)
         val bytes = ByteArray(step)
         while (true) {

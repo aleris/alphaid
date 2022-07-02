@@ -1,4 +1,4 @@
-package dev.atosca.alphaid
+package com.semanticmart.alphaid
 
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat

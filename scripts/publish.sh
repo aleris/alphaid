@@ -29,6 +29,6 @@ if git status --porcelain; then
 fi
 
 echo "Deploying $VERSION to sonatype"
-
+gradle publishToSonatype closeAndReleaseSonatypeStagingRepository
 
 echo "Version bump completed"

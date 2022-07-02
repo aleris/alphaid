@@ -115,9 +115,7 @@ val id2 = alphaId.next(10)
 
 ## Publish
 
-Execute the publish script to automatically increase the version and publish to sonatype:
-
-`ORG_GRADLE_PROJECT_sonatypeUsername=[user] ORG_GRADLE_PROJECT_sonatypePassword=[pass] sh scripts/publish.sh patch`
+Execute `sh ./scripts/publish.sh patch` script to automatically increase the version and publish to sonatype.
 
 The tags can be: `major`, `minor` or `patch` corresponding to semantic version `major.minor.patch`.   
 
