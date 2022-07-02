@@ -2,10 +2,10 @@
 
 Random pseudo-unique string id generator with a default web friendly alphabet.
 
-Based on https://github.com/aventrix/jnanoid
-- Written in kotlin
-- Performance improvements
-- Allow creating a reusable instance with custom alphabet and/or random generator
+Based on [JNanoId](https://github.com/aventrix/jnanoid) by [Aventrix](https://github.com/aventrix) with:
+- Written in Kotlin.
+- Performance improvements.
+- Allow creating a reusable instance with custom alphabet and/or random generator.
 
 
 ## Secure
